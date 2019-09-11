@@ -12,7 +12,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("ashishrpandey/hellonode")
+        app = docker.build("tarunjs/hellonode")
     }
 
     stage('Test image') {
@@ -29,12 +29,12 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        /*docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
-        }*/
+        }
 
     }
     
-    sh 'docker run -d -p "8000:8000" "ashishrpandey/hellonode:latest"'
+    sh 'docker run -d -p "8000:8000" "tarunjs/hellonode:latest"'
 }
